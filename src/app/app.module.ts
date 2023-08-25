@@ -8,8 +8,7 @@ import { WebcamModule } from 'ngx-webcam';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CameraComponent
+    AppComponent,CameraComponent
   ],
   imports: [
     BrowserModule,
