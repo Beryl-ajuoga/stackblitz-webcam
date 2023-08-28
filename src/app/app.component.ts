@@ -8,10 +8,14 @@ import { WebcamImage } from 'ngx-webcam';
 })
 export class AppComponent {
   title = 'webcam-app';
-  public webcamImage!:WebcamImage;
+  public webcamImage!: WebcamImage;
 
-  handleImage(webcamImage:WebcamImage){
+  handleImage(webcamImage: WebcamImage) {
     this.webcamImage = webcamImage;
+  }
+
+  removeImage() {
+    this.webcamImage = null as any;
   }
 
 }

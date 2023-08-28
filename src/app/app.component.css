@@ -1,0 +1,10 @@
+.camera{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.camera img{
+    width: 400px;
+    height: 300px;
+}

@@ -1,6 +1,7 @@
 
-<app-camera (pictureTaken)="handleImage($event)"></app-camera>
-
 <div class="camera" *ngIf="webcamImage">
   <img [src]="webcamImage.imageAsDataUrl"/>
 </div>
+<app-camera (pictureTaken)="handleImage($event)" (removImageEvent)="removeImage()"></app-camera>
+
+

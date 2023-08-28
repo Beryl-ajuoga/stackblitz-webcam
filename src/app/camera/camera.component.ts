@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { outputAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-camera',
@@ -10,6 +11,9 @@ import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
 export class CameraComponent implements OnInit {
   @Output()
   public pictureTaken = new EventEmitter<WebcamImage>();
+
+  @Output()
+  removImageEvent = new EventEmitter<any>()
 
   // camera turning on and off
   public showWebcam = true;
@@ -58,22 +62,30 @@ export class CameraComponent implements OnInit {
   }
 
   public handleImage(webcamImage: WebcamImage): void {
+    this.webcamImage = webcamImage
     this.pictureTaken.emit(webcamImage);
     this.showWebcam=false;
     this.isImageCaptured = true;
   }
 
-  public saveImage(): void{
-    if(this.webcamImage){
-      this.savedImage.push(this.webcamImage);
-      this.webcamImage=null;
-    }
-
+  public removeImage(): void {
+    this.showWebcam = true
+    this.webcamImage=null;
+    this.removImageEvent.emit()
   }
 
-  public removeImage(index: number): void {
-    this.savedImages.splice(index, 1);
-  }
+  saveImageLocally(): void {
+    if (this.webcamImage) {
+      const dataURL = this.webcamImage.imageAsDataUrl;
+      const link = document.createElement('a');
+      link.href = dataURL;
+      link.download = 'webcam_image.png'; // Change the filename as needed 
+       document.body.appendChild(link);
+       link.click();
+       document.body.removeChild(link);
+       this.removeImage()
+       }
+      }
 
   public cameraWasSwitched(deviceId: string): void {}
 
