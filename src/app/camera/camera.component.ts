@@ -18,6 +18,7 @@ export class CameraComponent implements OnInit {
   public deviceId!: string;
   public videoOptions: MediaTrackConstraints = {};
   public errors: WebcamInitError[] = [];
+  public isImageCaptured = false;
 
   // webcam camera trigger
   private trigger: Subject<void> = new Subject<void>();
@@ -26,6 +27,10 @@ export class CameraComponent implements OnInit {
   private nextWebcam: Subject<boolean | string> = new Subject<
     boolean | string
   >();
+  WebcamImage: any;
+  savedImage: any[]=[];
+  savedImages: any[]=[];
+  webcamImage: any;
 
   public ngOnInit(): void {
     // throw new Error('Method not implemented.');
@@ -54,6 +59,20 @@ export class CameraComponent implements OnInit {
 
   public handleImage(webcamImage: WebcamImage): void {
     this.pictureTaken.emit(webcamImage);
+    this.showWebcam=false;
+    this.isImageCaptured = true;
+  }
+
+  public saveImage(): void{
+    if(this.webcamImage){
+      this.savedImage.push(this.webcamImage);
+      this.webcamImage=null;
+    }
+
+  }
+
+  public removeImage(index: number): void {
+    this.savedImages.splice(index, 1);
   }
 
   public cameraWasSwitched(deviceId: string): void {}
@@ -61,6 +80,7 @@ export class CameraComponent implements OnInit {
   public get triggerObservable(): Observable<void> {
     return this.trigger.asObservable();
   }
+
 
   public get nextWebcamObservable(): Observable<boolean | string> {
     return this.nextWebcam.asObservable();

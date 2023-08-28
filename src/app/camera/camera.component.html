@@ -17,16 +17,27 @@
   
       <div>
         <button class="actionBtn" (click)="triggerCamera()">Take Picture</button>
+        <button class="actionBtn" (click)="saveImage()" [disabled]="!webcamImage">
+          Save Image
+        </button>
       </div>
   
       <div>
         <button class="actionBtnSwitch" (click)="showNextWebcam(true)">
-          Switch  camera
+          Switch Camera
         </button>
       </div>
     </div>
   </div>
+
+  <div class="saved-images">
+    <div *ngFor="let image of savedImages; let i = index" class="saved-image">
+      <img [src]="image.imageAsDataUrl" />
+      <button (click)="removeImage(i)">Delete</button>
+    </div>
+  </div>
   
   <h3 *ngIf="errors.length > 0">Message</h3>
+  
   <ul *ngFor="let error of errors">
     <li>{{ error | json }}</li>
