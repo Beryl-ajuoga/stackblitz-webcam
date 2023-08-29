@@ -1,38 +1,54 @@
-<div style="text-align:center">
-    <div>
+<div class="videoStreamContainer">
+  <div *ngIf="!errors.length" style="text-align:center">
+    <div *ngIf="hasCamera; else noCamera">
       <webcam
-      [height]="400"
-      [width]="400"
-      [trigger]="triggerObservable"
-      (imageCapture)="handleImage($event)"
-      *ngIf="showWebcam"
-      [allowCameraSwitch]="allowCameraSwitch"
-      [switchCamera]="nextWebcamObservable"
-      [videoOptions]="videoOptions"
-      (cameraSwitched)="cameraWasSwitched($event)"
-      (initError)="handleInitError($event)"
-    ></webcam>
-    <br />
-      
-  
-      <div>
-        <button class="actionBtn" (click)="triggerCamera()" *ngIf="!webcamImage">Take Picture</button>
-        <button class="actionBtn" (click)="saveImageLocally()" *ngIf="webcamImage">
-          Save Image
-        </button>
-      </div>
-  
-      <div>
-        <button *ngIf="!webcamImage && multipleWebcams" class="actionBtnSwitch" (click)="showNextWebcam(true)">
-          Switch Camera
-        </button>
+        [height]="400"
+        [width]="400"
+        [trigger]="triggerObservable"
+        (imageCapture)="handleImage($event)"
+        *ngIf="showWebcam"
+        [allowCameraSwitch]="allowCameraSwitch"
+        [switchCamera]="nextWebcamObservable"
+        [videoOptions]="videoOptions"
+        (cameraSwitched)="cameraWasSwitched($event)"
+        (initError)="handleInitError($event)"
+      ></webcam>
+      <br />
 
-        <button class="actionBtn"(click)="removeImage()" *ngIf="webcamImage" >Remove Image</button>
+      <div *ngIf="isImageCaptured" class="captured-image">
+        <img [src]="webcamImage?.imageAsDataUrl" />
       </div>
+    </div>
+
+    <div>
+      <button class="pictureBtn" (click)="triggerCamera()" *ngIf="!webcamImage">Take Picture</button>
+      <button class="actionBtn" (click)="saveImageLocally()" *ngIf="webcamImage">
+        Save Image
+      </button>
+    </div>
+
+    <div>
+      <button *ngIf="!webcamImage && multipleWebcams" class="actionBtnSwitch" (click)="showNextWebcam(true)">
+        Switch Camera
+      </button>
+
+      <button class="actionBtn" (click)="removeImage()" *ngIf="webcamImage">Remove Image</button>
     </div>
   </div>
 
-  
-  <ul *ngFor="let error of errors">
-    <li>{{ error | json }}</li>
-    </ul>
+  <div *ngIf="isCameraAccessDenied">
+    <p>{{ cameraErrorMessage }}</p>
+  </div>
+
+  <div *ngIf="!showWebcam && !isImageCaptured && !isCameraAccessDenied">
+    <p *ngIf="!allowCameraSwitch">Please give access to camera.</p>
+  </div>
+
+  <!-- <ul *ngFor="let error of errors">
+    <li>{{ error.message}}</li>
+  </ul> -->
+
+  <ng-template #noCamera>
+    No camera found
+  </ng-template>
+</div>

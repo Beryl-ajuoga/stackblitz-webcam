@@ -1,7 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
-import { outputAst } from '@angular/compiler';
 
 @Component({
   selector: 'app-camera',
@@ -35,12 +34,17 @@ export class CameraComponent implements OnInit {
   savedImage: any[]=[];
   savedImages: any[]=[];
   webcamImage: any;
+  hasCamera: boolean = false;
+  isCameraAccessDenied: boolean = false;
+  cameraErrorMessage: string= '';
 
   public ngOnInit(): void {
     // throw new Error('Method not implemented.');
     WebcamUtil.getAvailableVideoInputs().then(
       (MediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcams = MediaDevices && MediaDevices.length > 1;
+        this.hasCamera = MediaDevices.length > 0;
+        
       }
     );
   }
@@ -55,6 +59,11 @@ export class CameraComponent implements OnInit {
 
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
+    if(error.mediaStreamError && error.mediaStreamError.name == 'NotAllowedError'){
+      this.showWebcam = false;
+      this.isCameraAccessDenied = true;
+      this.cameraErrorMessage = "Please give access to camera";
+    }
   }
 
   public showNextWebcam(directionOrDeviceId: boolean | string): void {
@@ -79,7 +88,7 @@ export class CameraComponent implements OnInit {
       const dataURL = this.webcamImage.imageAsDataUrl;
       const link = document.createElement('a');
       link.href = dataURL;
-      link.download = 'webcam_image.png'; // Change the filename as needed 
+      link.download = 'webcam_image.png'; 
        document.body.appendChild(link);
        link.click();
        document.body.removeChild(link);
@@ -98,3 +107,4 @@ export class CameraComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 }
+
