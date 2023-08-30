@@ -42,18 +42,19 @@
   background-color: #2980b9;
 }
 
-.videoStreamContainer {
+.error-message {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 400px;
   height: 400px; 
-  border: 3px dotted hsl(0, 5%, 69%); 
+  border: 3px dotted hsl(0, 1%, 52%); 
   margin: 20px auto; 
 }
 
 .error-message {
   text-align: center;
   font-size: 16px;
-  color: #ceb6b3;
+  color: #0e0d0d;
 }
+

@@ -36,19 +36,26 @@
     </div>
   </div>
 
-  <div *ngIf="isCameraAccessDenied">
+  <!-- <div *ngIf="isCameraAccessDenied">
     <p>{{ cameraErrorMessage }}</p>
-  </div>
+  </div> -->
 
-  <div *ngIf="!showWebcam && !isImageCaptured && !isCameraAccessDenied">
+  <!-- <div *ngIf="!showWebcam && !isImageCaptured && !isCameraAccessDenied">
     <p *ngIf="!allowCameraSwitch">Please give access to camera.</p>
+  </div> -->
+  
+  <div *ngIf="isCameraAccessDenied" class="error-message">
+    <div class="dotted-square">
+      <p>Please give access to camera.</p>
+    </div>
   </div>
 
   <!-- <ul *ngFor="let error of errors">
     <li>{{ error.message}}</li>
   </ul> -->
-
+  
   <ng-template #noCamera>
     No camera found
   </ng-template>
+  
 </div>
