@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { WebcamImage, WebcamInitError, WebcamUtil } from 'ngx-webcam';
+import { publishFacade } from '@angular/compiler';
 
 @Component({
   selector: 'app-camera',
@@ -89,11 +90,11 @@ export class CameraComponent implements OnInit {
       const link = document.createElement('a');
       link.href = dataURL;
       link.download = 'webcam_image.png'; 
-       document.body.appendChild(link);
-       link.click();
-       document.body.removeChild(link);
-       this.removeImage()
-       }
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      this.removeImage()
+      }
       }
 
   public cameraWasSwitched(deviceId: string): void {}
@@ -107,4 +108,3 @@ export class CameraComponent implements OnInit {
     return this.nextWebcam.asObservable();
   }
 }
-

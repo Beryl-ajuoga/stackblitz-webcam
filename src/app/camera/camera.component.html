@@ -1,31 +1,37 @@
 <div class="videoStreamContainer">
   <div *ngIf="!errors.length" style="text-align:center">
-    <div *ngIf="hasCamera; else noCamera">
+    <div class="cameraContainer" *ngIf="hasCamera; else noCamera">
+
+      <div *ngIf="showWebcam"
+      >
       <webcam
-        [height]="400"
-        [width]="400"
+        [height]="390"
+        [width]="390"
         [trigger]="triggerObservable"
         (imageCapture)="handleImage($event)"
-        *ngIf="showWebcam"
         [allowCameraSwitch]="allowCameraSwitch"
         [switchCamera]="nextWebcamObservable"
         [videoOptions]="videoOptions"
         (cameraSwitched)="cameraWasSwitched($event)"
         (initError)="handleInitError($event)"
       ></webcam>
-      <br />
+    </div>
+      
 
-      <div *ngIf="isImageCaptured" class="captured-image">
+      <div *ngIf="isImageCaptured && !showWebcam"  class="captured-image">
         <img [src]="webcamImage?.imageAsDataUrl" />
       </div>
     </div>
 
-    <div>
-      <button class="pictureBtn" (click)="triggerCamera()" *ngIf="!webcamImage">Take Picture</button>
-      <button class="actionBtn" (click)="saveImageLocally()" *ngIf="webcamImage">
-        Save Image
-      </button>
+    <div class="centerIcon">
+      
+      <div class="captureBtn" (click)="triggerCamera()" *ngIf="!webcamImage">
+      <i class="fa fa-circle" aria-hidden="true"></i>
     </div>
+
+      <button class="actionBtn" (click)="saveImageLocally()" *ngIf="webcamImage">save image</button> 
+
+
 
     <div>
       <button *ngIf="!webcamImage && multipleWebcams" class="actionBtnSwitch" (click)="showNextWebcam(true)">
@@ -33,26 +39,15 @@
       </button>
 
       <button class="actionBtn" (click)="removeImage()" *ngIf="webcamImage">Remove Image</button>
-    </div>
+    </div> 
   </div>
 
-  <!-- <div *ngIf="isCameraAccessDenied">
-    <p>{{ cameraErrorMessage }}</p>
-  </div> -->
-
-  <!-- <div *ngIf="!showWebcam && !isImageCaptured && !isCameraAccessDenied">
-    <p *ngIf="!allowCameraSwitch">Please give access to camera.</p>
-  </div> -->
   
   <div *ngIf="isCameraAccessDenied" class="error-message">
     <div class="dotted-square">
       <p>Please give access to camera.</p>
     </div>
   </div>
-
-  <!-- <ul *ngFor="let error of errors">
-    <li>{{ error.message}}</li>
-  </ul> -->
   
   <ng-template #noCamera>
     No camera found

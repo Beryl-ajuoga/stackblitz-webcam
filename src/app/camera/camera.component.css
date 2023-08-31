@@ -1,8 +1,8 @@
- .captured-image {
+@import '~@fortawesome/fontawesome-free/css/all.css';
+
+.captured-image {
   width: 400px;
   height: 400px;
-  border: 2px solid #2389d7;
-  border-radius: 20px;
   align-items: center;
   justify-content: center;
   overflow: hidden;
@@ -10,8 +10,23 @@
 } 
 
 .captured-image img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 390px;
+  max-height: 390px;
+}
+
+.cameraContainer , .cameraContainer div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.cameraContainer div{
+  border: 2px solid #2389d7;
+  border-radius: 5px;
+  width: 400px;
+  height: 300px;
+
 }
 
 .pictureBtn{
@@ -22,6 +37,38 @@
   color: white;
   cursor: pointer;
   font-size: 16px;
+} 
+
+.captureBtn{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 1px solid black;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.captureBtn:hover{
+  cursor: pointer;
+  background: black;
+}
+
+.fa-circle:hover{
+  color: white;
+}
+
+
+.fa-circle{
+  font-size: 60px;
+}
+
+.centerIcon{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .actionBtn {
@@ -30,7 +77,6 @@
   border: none;
   padding: 10px 20px;
   cursor: pointer;
-  border-radius: 5px;
   font-size: 16px;
   display: flex;
   flex-direction: column;
