@@ -24,13 +24,15 @@
     </div>
 
     <div class="centerIcon">
-      
+
       <div class="captureBtn" (click)="triggerCamera()" *ngIf="!webcamImage">
       <i class="fa fa-circle" aria-hidden="true"></i>
     </div>
 
-      <button class="actionBtn" (click)="saveImageLocally()" *ngIf="webcamImage">save image</button> 
 
+      <div class="saveBtn" (click)="saveImageLocally()" *ngIf="webcamImage">
+        <i class="fas fa-download" aria-hidden="true"></i>
+      </div>
 
 
     <div>
@@ -38,8 +40,11 @@
         Switch Camera
       </button>
 
-      <button class="actionBtn" (click)="removeImage()" *ngIf="webcamImage">Remove Image</button>
-    </div> 
+
+      <div class="removeBtn" (click)="removeImage()" *ngIf="webcamImage"><i class="fas fa-trash" aria-hidden="true"></i>
+      </div>
+    </div>
+
   </div>
 
   
